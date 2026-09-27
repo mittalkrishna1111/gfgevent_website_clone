@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>How I Made My Marvel Website Using Vibecoding</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap');
+
+    @page {
+      size: A4 portrait;
+      margin: 14mm 14mm 14mm 14mm;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: #1e293b;
+      background: #ffffff;
+      line-height: 1.45;
+      font-size: 13px;
+    }
+
+    .page {
+      page-break-after: always;
+      position: relative;
+      height: 268mm;
+      max-height: 268mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+
+    .page:last-child {
+      page-break-after: avoid;
+    }
+
+    .page-header {
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .club-tag {
+      background: #dc2626;
+      color: #ffffff;
+      font-size: 9px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .page-badge {
+      font-size: 10px;
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .title-block {
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+      color: #ffffff;
+      padding: 14px 18px;
+      border-radius: 10px;
+      margin-bottom: 14px;
+      border-left: 5px solid #dc2626;
+    }
+
+    .main-title {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+      margin-bottom: 4px;
+      color: #ffffff;
+    }
+
+    .subtitle {
+      font-size: 11px;
+      color: #cbd5e1;
+      font-weight: 500;
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 10px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-left: 3px solid #dc2626;
+      padding-left: 8px;
+    }
+
+    .box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+
+    .box-highlight {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-left: 4px solid #2563eb;
+    }
+
+    .box-red {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      border-left: 4px solid #dc2626;
+    }
+
+    .box-green {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-left: 4px solid #16a34a;
+    }
+
+    .box-amber {
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      border-left: 4px solid #d97706;
+    }
+
+    .analogy-title {
+      font-weight: 700;
+      font-size: 12px;
+      color: #1e3a8a;
+      margin-bottom: 3px;
+    }
+
+    .prompt-box {
+      background: #0f172a;
+      color: #f1f5f9;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 11px;
+      line-height: 1.5;
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      margin-bottom: 8px;
+    }
+
+    .prompt-box ul {
+      margin-left: 18px;
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+
+    .prompt-box li {
+      margin-bottom: 3px;
+    }
+
+    .prompt-tag {
+      background: #dc2626;
+      color: white;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 6px;
+    }
+
+    .step-card {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      margin-bottom: 8px;
+      padding: 8px 10px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+    }
+
+    .step-num {
+      background: #dc2626;
+      color: white;
+      font-weight: 800;
+      font-size: 11px;
+      min-width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .step-content strong {
+      font-size: 12px;
+      color: #0f172a;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .step-content p {
+      font-size: 11.5px;
+      color: #475569;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .feature-item {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 8px 10px;
+    }
+
+    .feature-item h4 {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 3px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .feature-item p {
+      font-size: 10.5px;
+      color: #475569;
+      line-height: 1.35;
+    }
+
+    .qa-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 9px 12px;
+      margin-bottom: 8px;
+    }
+
+    .qa-card.accent {
+      border-left: 4px solid #dc2626;
+    }
+
+    .qa-q {
+      font-size: 11.5px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 3px;
+    }
+
+    .qa-a {
+      font-size: 11px;
+      color: #334155;
+      line-height: 1.4;
+      background: #f8fafc;
+      padding: 6px 9px;
+      border-radius: 4px;
+      border-left: 2px solid #94a3b8;
+      font-style: normal;
+    }
+
+    .qa-a strong {
+      color: #dc2626;
+    }
+
+    .page-footer {
+      border-top: 1px solid #e2e8f0;
+      padding-top: 6px;
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 9px;
+      color: #94a3b8;
+      font-weight: 600;
+    }
+
+    .highlight-pill {
+      background: #fef08a;
+      color: #854d0e;
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-weight: 700;
+    }
+
+    .demo-steps {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .demo-step {
+      background: #ffffff;
+      border: 1px dashed #cbd5e1;
+      padding: 6px 8px;
+      border-radius: 5px;
+      font-size: 10.5px;
+      text-align: center;
+    }
+
+    .demo-step strong {
+      display: block;
+      color: #dc2626;
+      margin-bottom: 2px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= PAGE 1 ================= -->
+  <div class="page">
+    <div>
+      <div class="page-header">
+        <span class="club-tag">GFG Student Chapter • Club Activity</span>
+        <span class="page-badge">Page 1 of 3 // Concept & Master Prompt</span>
+      </div>
+
+      <div class="title-block">
+        <h1 class="main-title">How I Made My Marvel Website Using Vibecoding</h1>
+        <p class="subtitle">A simple, plain-English guide to explain your project with 100% confidence in front of club seniors and interviewers.</p>
+      </div>
+
+      <div class="section-title">1. What is "Vibecoding"? (In Everyday English)</div>
+      
+      <div class="box box-highlight">
+        <div class="analogy-title">💡 The Movie Director Analogy</div>
+        <p style="font-size: 12px; color: #1e3a8a; line-height: 1.45;">
+          Imagine you are a <strong>movie director</strong>. You do not carry the heavy cameras or sew the superhero costumes yourself. Instead, you have the <strong>grand story</strong> in your head. You tell your talented team exactly what superhero scene to create, how the colors should look, and what feelings you want. When they show you the scene, you review it, test it, and tell them how to make it even cooler. 
+          <br><br>
+          <strong>That is Vibecoding:</strong> You are the master director. The AI computer is your super-fast assistant who types the code. You give clear instructions, review every button and picture, and steer the project until it is perfect.
+        </p>
+      </div>
+
+      <div class="box">
+        <p style="font-size: 11.5px; color: #475569;">
+          <strong>The 3 Golden Rules of Vibecoding:</strong><br>
+          1. <strong>Dream it first:</strong> You decide what the website is for (a Marvel hackathon for our university).<br>
+          2. <strong>Describe it clearly:</strong> You explain in simple steps what every section and button should do.<br>
+          3. <strong>Test and improve:</strong> You click every feature in your browser, find things to polish, and guide the AI to fix them.
+        </p>
+      </div>
+
+      <div class="section-title">2. The Master Prompt (The Exact Words I Gave to the Computer)</div>
+      
+      <div class="prompt-box">
+        <span class="prompt-tag">COPY & READ THIS IN THE INTERVIEW</span>
+        <p><strong>"Build a superhero hackathon website for Bennett University students inspired by Marvel's Avengers.</strong></p>
+        <ul>
+          <li><strong>Look & Colors:</strong> Use a dark space background with Iron Man red, bright gold, cosmic blue, and emerald green. Make it feel like an Iron Man computer screen.</li>
+          <li><strong>Hero Welcome:</strong> Show a giant title 'Multiverse of Code 2026' with a live ticking clock counting down to the hackathon day.</li>
+          <li><strong>5 Superhero Teams:</strong> Let students pick a team (Iron Man, Captain America, Doctor Strange, Black Panther, or Thor). Clicking a team changes the website colors.</li>
+          <li><strong>6 Infinity Stone Topics:</strong> Create 6 cards for different competition topics with problem challenges.</li>
+          <li><strong>Live ID Pass Maker:</strong> Create a fun form where students type their name and pick a superhero sticker, and their official ID badge updates on screen instantly as they type.</li>
+          <li><strong>Cool Superhero Tricks:</strong> Add an Iron Man targeting scanner that follows the mouse, fun button sound effects made right in the browser without downloading any music files, and a golden Thanos glove that makes cards turn into dust when clicked."</li>
+        </ul>
+      </div>
+
+      <div class="box box-amber">
+        <p style="font-size: 11px; color: #92400e;">
+          <strong>Why this prompt is so powerful:</strong> It does not just say "make a website." It tells the computer the exact university, the theme, the colors, what every single button does, and all the fun surprises to include!
+        </p>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <span>Bennett University • GeeksforGeeks Student Chapter</span>
+      <span>Interview Cheat Sheet • Page 1</span>
+    </div>
+  </div>
+
+  <!-- ================= PAGE 2 ================= -->
+  <div class="page">
+    <div>
+      <div class="page-header">
+        <span class="club-tag">GFG Student Chapter • Club Activity</span>
+        <span class="page-badge">Page 2 of 3 // Building Steps & Cool Features</span>
+      </div>
+
+      <div class="section-title">3. The 3 Easy Steps of Making It (My Process)</div>
+
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <strong>Step 1: Setting Up the Big Picture & The Information Notebook</strong>
+          <p>I started by telling the AI to build the main skeleton: the top title, the hackathon rules, the prize amounts, and the schedule. I made sure all the event details were stored neatly in one separate "information notebook" file so anyone can change a prize or date in 5 seconds without messing up the design.</p>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <strong>Step 2: Making It Fun & Interactive (Buttons That Work)</strong>
+          <p>A website shouldn't just be a boring poster. I instructed the computer to connect all the buttons: clicking a superhero team changes the theme color, clicking a topic card pops up a mission card, and typing in the registration form instantly draws a personalized superhero ID card on the screen.</p>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <strong>Step 3: Adding the "Wow" Superhero Vibes & Testing</strong>
+          <p>In the final step, I added elements that make people smile: Iron Man beep and blast sounds, an animated mouse pointer that looks like a high-tech scanner, a party-popper celebration when you get your pass, and a secret Thanos glove that turns half the screen into dust!</p>
+        </div>
+      </div>
+
+      <div class="section-title">4. Five Cool Things to Brag About in Your Interview</div>
+
+      <div class="feature-grid">
+        <div class="feature-item">
+          <h4>🔊 1. Magic Sound Effects</h4>
+          <p>There are no downloaded song files or audio clips that could break or load slowly. The browser creates the beeps, clicks, and laser sounds live, just like an electronic piano inside your computer!</p>
+        </div>
+
+        <div class="feature-item">
+          <h4>🪪 2. Live Superhero ID Badge</h4>
+          <p>When you type your name, pick your college, and choose a hero seal, the ID card on the right updates instantly like a mirror. When you click 'Claim Pass', celebratory confetti blasts across the screen!</p>
+        </div>
+
+        <div class="feature-item">
+          <h4>🤌 3. The Thanos Snap Secret</h4>
+          <p>In the bottom-right corner sits a golden Infinity Gauntlet. Click it, and half the cards on your screen dissolve into cosmic dust! Click the green Time Stone button to bring everything back safely.</p>
+        </div>
+
+        <div class="feature-item">
+          <h4>🎯 4. Iron Man Targeting Mouse</h4>
+          <p>The mouse pointer isn't an ordinary arrow. It turns into a high-tech glowing scanner circle. Whenever you hover over an item, it locks on and shows a floating tag telling you what it is.</p>
+        </div>
+      </div>
+
+      <div class="box box-green">
+        <h4 style="font-size: 11.5px; font-weight: 700; color: #166534; margin-bottom: 2px;">⚡ 5. Runs Anywhere with Just One Double-Click</h4>
+        <p style="font-size: 11px; color: #14532d;">
+          You don't need to install any heavy software, node modules, or special developer tools. The entire project is split into 5 neat, clean files that open instantly in any web browser like Google Chrome or Microsoft Edge.
+        </p>
+      </div>
+
+      <div class="box box-red" style="margin-top: 4px;">
+        <p style="font-size: 11px; color: #991b1b;">
+          <strong>Key Interview Tip:</strong> Interviewers love students who think about the user experience. Tell them: <em>"I wanted the website to feel like stepping into Tony Stark's lab rather than reading a boring brochure."</em>
+        </p>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <span>Bennett University • GeeksforGeeks Student Chapter</span>
+      <span>Interview Cheat Sheet • Page 2</span>
+    </div>
+  </div>
+
+  <!-- ================= PAGE 3 ================= -->
+  <div class="page">
+    <div>
+      <div class="page-header">
+        <span class="club-tag">GFG Student Chapter • Club Activity</span>
+        <span class="page-badge">Page 3 of 3 // Interview Script & Live Demo</span>
+      </div>
+
+      <div class="section-title">5. Word-For-Word Interview Cheat Sheet</div>
+
+      <div class="qa-card accent">
+        <div class="qa-q">Q1: "Tell us about this website in 30 seconds."</div>
+        <div class="qa-a">
+          "I designed a superhero hackathon website for our college called <strong>Multiverse of Code 2026</strong>. It has 5 superhero teams, 6 competition topics, a live countdown clock, a real-time superhero ID card maker, custom button sound effects, and a secret Thanos snap trick. I created it using vibecoding by acting as the creative director and guiding an AI assistant to build it."
+        </div>
+      </div>
+
+      <div class="qa-card accent">
+        <div class="qa-q">Q2: "Did the computer just do everything, or what was your role?"</div>
+        <div class="qa-a">
+          "The computer typed the lines of code, but <strong>I drove the whole project</strong>. An AI doesn't know what makes a college hackathon exciting. I chose the Bennett University theme, planned the 5 superhero factions, decided how the live ID pass should work, tested every interaction in the browser, and instructed the AI to add sound effects and the Thanos easter egg."
+        </div>
+      </div>
+
+      <div class="qa-card accent">
+        <div class="qa-q">Q3: "How does the live ID card generator work?"</div>
+        <div class="qa-a">
+          "It acts like a real-time mirror. Whenever you type a letter in the name box or pick a hero sticker like Spider-Man or Iron Man, the browser catches that change instantly and writes it on the digital ID card. When you click Submit, it plays a laser sound and fires colorful confetti."
+        </div>
+      </div>
+
+      <div class="qa-card accent">
+        <div class="qa-q">Q4: "What is your biggest takeaway from this activity?"</div>
+        <div class="qa-a">
+          "Vibecoding taught me that the biggest superpower in tech today is <strong>clear thinking and communication</strong>. If you know what you want to build and can describe it clearly with patience, you can bring any creative idea to life in hours instead of weeks."
+        </div>
+      </div>
+
+      <div class="section-title">6. Your Live Demo Checklist (Show This on Your Laptop)</div>
+      
+      <div class="demo-steps">
+        <div class="demo-step">
+          <strong>Step 1: The Teams</strong>
+          Click on Thor or Doctor Strange to show how the website colors change.
+        </div>
+        <div class="demo-step">
+          <strong>Step 2: The ID Pass</strong>
+          Type the interviewer's name in the box and show the live card update + confetti!
+        </div>
+        <div class="demo-step">
+          <strong>Step 3: The Snap</strong>
+          Click the golden glove at the bottom to turn half the cards into dust!
+        </div>
+      </div>
+
+      <div class="box box-highlight" style="margin-top: 10px;">
+        <p style="font-size: 11px; color: #1e3a8a; text-align: center;">
+          🌟 <strong>Final Encouragement:</strong> Speak clearly, keep a friendly smile, and enjoy showing off your work. You built an amazing, playful project that will stand out from everyone else!
+        </p>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      <span>Bennett University • GeeksforGeeks Student Chapter</span>
+      <span>Interview Cheat Sheet • Page 3</span>
+    </div>
+  </div>
+
+</body>
+</html>

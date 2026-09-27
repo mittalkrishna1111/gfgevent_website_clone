@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AVENGERS: INITIATIVE '26 // Multiverse of Code — GFG SC Bennett University</title>
+  <meta name="description" content="Earth's Mightiest Geeks Assemble! Official Marvel-Themed Hackathon & Tech Summit by GeeksforGeeks Student Chapter, Bennett University. ₹2,50,000+ Prize Pool, 36-Hour Hackathon, Stark Expo & Multiverse Quests.">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            marvelRed: '#e23636',
+            arcGold: '#fbbf24',
+            tesseractCyan: '#00f0ff',
+            timeEmerald: '#10b981',
+            powerPurple: '#a855f7',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- External CDNs: Lucide Icons & Canvas Confetti -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <!-- Marvel Multiverse Core Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="relative min-h-screen">
+
+  <!-- Interactive Multiverse Background Canvas -->
+  <canvas id="multiverse-canvas" class="fixed inset-0 pointer-events-none z-0 opacity-70"></canvas>
+
+  <!-- Stark HUD Reticle Cursor -->
+  <div id="custom-cursor" class="h-4 w-4 rounded-full bg-red-600/90 border border-white/60 shadow-[0_0_10px_rgba(226,54,54,0.7)] flex flex-col items-center justify-center font-mono">
+    <div id="cursor-content" class="hidden flex-col items-center justify-center p-1 text-center">
+      <span id="cursor-feature-text" class="text-[9px] font-black uppercase tracking-wider text-cyan-300 leading-tight"></span>
+      <span class="text-[7px] text-zinc-400 tracking-widest uppercase">TARGET ACQUIRED</span>
+    </div>
+  </div>
+  <div id="cursor-tag" class="fixed pointer-events-none z-[10000] hidden items-center gap-1.5 px-3 py-1 rounded-md bg-black/90 border border-cyan-400 text-cyan-300 font-mono text-[10px] font-black uppercase tracking-widest shadow-2xl backdrop-blur-md">
+    <span class="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-ping"></span>
+    <span>FEATURE:</span>
+    <span id="cursor-tag-name" class="text-white"></span>
+  </div>
+
+  <!-- Top Cinematic Chapter Banner -->
+  <div class="sticky top-0 z-50 bg-red-700 text-white text-[10px] font-mono tracking-widest uppercase py-1 px-4 text-center font-bold flex items-center justify-center gap-2 border-b border-red-500/40 shadow-sm">
+    <span class="inline-block h-1.5 w-1.5 rounded-full bg-white animate-ping"></span>
+    <span>GEEKSFORGEEKS STUDENT CHAPTER // BENNETT UNIVERSITY PRESENTS</span>
+    <span class="hidden sm:inline text-red-200">|</span>
+    <span class="hidden sm:inline text-amber-300">OCTOBER 16–18, 2026 • GREATER NOIDA</span>
+  </div>
+
+  <!-- Global Floating Glass Navbar -->
+  <header class="sticky top-7 z-40 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-2">
+    <div class="flex items-center justify-between rounded-xl px-4 py-2.5 bg-[#0a0e1a]/85 backdrop-blur-xl border border-white/10 shadow-2xl">
+      <!-- Chapter Logo -->
+      <a href="#" class="flex items-center gap-3 group">
+        <div id="nav-badge" class="h-10 w-10 rounded-lg bg-red-600 flex items-center justify-center font-mono font-black text-white text-xs tracking-tighter shadow-lg transition-transform group-hover:scale-105">
+          GFG
+        </div>
+        <div class="flex flex-col text-left">
+          <span class="text-xs font-black tracking-wider text-white uppercase group-hover:text-red-400 transition-colors">
+            MULTIVERSE OF CODE '26
+          </span>
+          <span class="text-[10px] font-mono text-zinc-400 tracking-tight">
+            BENNETT UNIVERSITY CHAPTER
+          </span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="hidden lg:flex items-center gap-6">
+        <a href="#factions" class="text-[11px] font-mono font-bold uppercase tracking-wider text-zinc-300 hover:text-white transition-colors">FACTIONS</a>
+        <a href="#tracks" class="text-[11px] font-mono font-bold uppercase tracking-wider text-zinc-300 hover:text-white transition-colors">INFINITY TRACKS</a>
+        <a href="#timeline" class="text-[11px] font-mono font-bold uppercase tracking-wider text-zinc-300 hover:text-white transition-colors">TIMELINE</a>
+        <a href="#prizes" class="text-[11px] font-mono font-bold uppercase tracking-wider text-zinc-300 hover:text-white transition-colors">PRIZES</a>
+        <a href="#council" class="text-[11px] font-mono font-bold uppercase tracking-wider text-zinc-300 hover:text-white transition-colors">COUNCIL</a>
+        <a href="#faq" class="text-[11px] font-mono font-bold uppercase tracking-wider text-zinc-300 hover:text-white transition-colors">JARVIS FAQ</a>
+      </nav>
+
+      <!-- Audio & CTA Controls -->
+      <div class="flex items-center gap-3">
+        <button id="cosmic-hum-btn" class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-white/10 bg-zinc-900/60 text-zinc-400 text-[11px] font-mono hover:text-white transition-all cursor-pointer">
+          <i data-lucide="radio" class="h-3.5 w-3.5"></i>
+          <span id="hum-text">COSMIC HUM</span>
+        </button>
+
+        <button id="mute-btn" class="p-1.5 rounded-lg border border-white/10 bg-zinc-900/60 text-zinc-300 hover:text-white transition-all cursor-pointer" title="Toggle Sound FX">
+          <i data-lucide="volume-2" class="h-4 w-4 text-emerald-400"></i>
+        </button>
+
+        <a href="#register" data-feature="ASSEMBLE SQUAD" data-feature-color="#e23636" class="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-red-600 to-amber-600 px-4 py-2 text-xs font-black tracking-widest text-white shadow-lg uppercase font-mono hover:scale-105 transition-all">
+          <i data-lucide="zap" class="h-3.5 w-3.5 fill-amber-300 text-amber-300"></i>
+          <span>ASSEMBLE</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="relative z-10 flex flex-col">
+
+    <!-- HERO SECTION -->
+    <section class="relative min-h-[90vh] pt-24 pb-20 flex flex-col justify-center items-center text-center overflow-hidden px-4 sm:px-6">
+      <div class="absolute inset-0 bg-hex-grid opacity-60 pointer-events-none"></div>
+      <div class="absolute inset-0 bg-comic-dots opacity-40 pointer-events-none"></div>
+
+      <div class="relative z-10 max-w-5xl mx-auto flex flex-col items-center">
+        <!-- Telemetry Pill -->
+        <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#0a0e1a]/90 border border-white/15 text-xs font-mono text-zinc-300 shadow-xl mb-6 backdrop-blur-md">
+          <span class="h-2 w-2 rounded-full bg-red-500 animate-ping"></span>
+          <span class="text-red-400 font-bold uppercase tracking-wider">STARK EXPO '26</span>
+          <span class="text-zinc-600">/</span>
+          <span>BENNETT UNIVERSITY CHAPTER</span>
+          <span class="text-zinc-600">/</span>
+          <span class="text-amber-400 hidden sm:inline">28.4595° N, 77.5140° E</span>
+        </div>
+
+        <!-- Headline -->
+        <div class="relative mb-4">
+          <div class="text-xs sm:text-sm font-mono font-black tracking-[0.35em] text-red-500 uppercase mb-2">
+            AVENGERS: INITIATIVE PROTOCOL
+          </div>
+          <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tighter uppercase leading-[0.95] text-white">
+            <span class="block text-white text-shadow-comic">MULTIVERSE</span>
+            <span id="hero-gradient-text" class="block text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-amber-400 to-red-600">
+              OF CODE 2026
+            </span>
+          </h1>
+        </div>
+
+        <p class="max-w-2xl text-base sm:text-lg text-zinc-300 font-normal leading-relaxed mb-8">
+          Earth's Mightiest Geeks assemble at <strong class="text-white font-semibold">Bennett University</strong> to defend the digital realm. 36 hours of non-stop coding, neural multi-agent AI, cyber warfare defenses, and multiversal innovation.
+        </p>
+
+        <!-- Live Countdown Timer -->
+        <div data-feature="COUNTDOWN" data-feature-color="#fbbf24" class="w-full max-w-2xl mb-10 p-4 sm:p-5 rounded-2xl bg-[#0a0e1a]/80 backdrop-blur-xl border border-white/10 shadow-2xl">
+          <div class="flex items-center justify-between border-b border-white/10 pb-2.5 mb-3 text-[11px] font-mono text-zinc-400">
+            <span class="flex items-center gap-1.5 text-amber-400 font-bold">
+              <i data-lucide="clock" class="h-3.5 w-3.5"></i>
+              T-MINUS COUNTDOWN TO INITIATIVE ASSEMBLE
+            </span>
+            <span class="text-zinc-500 hidden sm:inline">OCTOBER 16, 2026 • 09:00 IST</span>
+          </div>
+
+          <div class="grid grid-cols-4 gap-2 sm:gap-4 font-mono">
+            <div class="flex flex-col items-center justify-center p-2.5 sm:p-3 rounded-xl bg-black/60 border border-white/5">
+              <span id="cd-days" class="text-2xl sm:text-4xl font-black text-white">18</span>
+              <span class="text-[10px] tracking-widest text-zinc-400 font-semibold mt-1">DAYS</span>
+            </div>
+            <div class="flex flex-col items-center justify-center p-2.5 sm:p-3 rounded-xl bg-black/60 border border-white/5">
+              <span id="cd-hours" class="text-2xl sm:text-4xl font-black text-white">22</span>
+              <span class="text-[10px] tracking-widest text-zinc-400 font-semibold mt-1">HOURS</span>
+            </div>
+            <div class="flex flex-col items-center justify-center p-2.5 sm:p-3 rounded-xl bg-black/60 border border-white/5">
+              <span id="cd-minutes" class="text-2xl sm:text-4xl font-black text-white">14</span>
+              <span class="text-[10px] tracking-widest text-zinc-400 font-semibold mt-1">MINUTES</span>
+            </div>
+            <div class="flex flex-col items-center justify-center p-2.5 sm:p-3 rounded-xl bg-black/60 border border-white/5">
+              <span id="cd-seconds" class="text-2xl sm:text-4xl font-black text-white">49</span>
+              <span class="text-[10px] tracking-widest text-zinc-400 font-semibold mt-1">SECONDS</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero CTAs -->
+        <div class="flex flex-wrap items-center justify-center gap-4 mb-14">
+          <a href="#register" data-feature="ASSEMBLE SQUAD" data-feature-color="#e23636" class="inline-flex items-center gap-3 rounded-xl bg-gradient-to-r from-red-600 via-red-500 to-amber-600 px-8 py-4 text-sm font-black tracking-widest text-white uppercase shadow-2xl hover:scale-105 transition-all font-mono">
+            <i data-lucide="sparkles" class="h-5 w-5 text-amber-200"></i>
+            <span>ASSEMBLE SQUAD // GET BADGE</span>
+          </a>
+          <a href="#tracks" data-feature="INFINITY TRACKS" data-feature-color="#00f0ff" class="inline-flex items-center gap-2 rounded-xl bg-[#0a0e1a]/80 hover:bg-[#111827] px-6 py-4 text-sm font-bold tracking-wider text-zinc-200 border border-white/15 backdrop-blur-md transition-all font-mono hover:border-cyan-400 hover:text-cyan-300">
+            <i data-lucide="shield-alert" class="h-4 w-4 text-cyan-400"></i>
+            <span>EXPLORE 6 INFINITY TRACKS</span>
+          </a>
+        </div>
+
+        <!-- 4 Live Metrics Cards -->
+        <div class="w-full grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-w-4xl">
+          <div data-feature="BOUNTY VAULT" data-feature-color="#fbbf24" class="glass-panel p-4 rounded-xl text-left border border-white/10 hover:border-amber-500/40 transition-all cursor-default">
+            <div class="flex items-center justify-between text-amber-400 mb-1">
+              <span class="text-[10px] font-mono tracking-wider font-bold">BOUNTY VAULT</span>
+              <i data-lucide="trophy" class="h-4 w-4"></i>
+            </div>
+            <div class="text-xl sm:text-2xl font-black text-white font-mono">₹2,50,000+</div>
+            <div class="text-[11px] text-zinc-400 font-mono">Cash + Cloud Grants</div>
+          </div>
+
+          <div data-feature="36H SPRINT" data-feature-color="#00f0ff" class="glass-panel p-4 rounded-xl text-left border border-white/10 hover:border-cyan-500/40 transition-all cursor-default">
+            <div class="flex items-center justify-between text-cyan-400 mb-1">
+              <span class="text-[10px] font-mono tracking-wider font-bold">HACK DURATION</span>
+              <i data-lucide="clock" class="h-4 w-4"></i>
+            </div>
+            <div class="text-xl sm:text-2xl font-black text-white font-mono">36 HOURS</div>
+            <div class="text-[11px] text-zinc-400 font-mono">Non-Stop Sprint</div>
+          </div>
+
+          <div data-feature="500+ HACKERS" data-feature-color="#a855f7" class="glass-panel p-4 rounded-xl text-left border border-white/10 hover:border-purple-500/40 transition-all cursor-default">
+            <div class="flex items-center justify-between text-purple-400 mb-1">
+              <span class="text-[10px] font-mono tracking-wider font-bold">CAPACITY</span>
+              <i data-lucide="users" class="h-4 w-4"></i>
+            </div>
+            <div class="text-xl sm:text-2xl font-black text-white font-mono">500+ HACKERS</div>
+            <div class="text-[11px] text-zinc-400 font-mono">100+ Shortlisted Squads</div>
+          </div>
+
+          <div data-feature="BENNETT UNIV" data-feature-color="#ef4444" class="glass-panel p-4 rounded-xl text-left border border-white/10 hover:border-red-500/40 transition-all cursor-default">
+            <div class="flex items-center justify-between text-red-400 mb-1">
+              <span class="text-[10px] font-mono tracking-wider font-bold">LOCATION</span>
+              <i data-lucide="map-pin" class="h-4 w-4"></i>
+            </div>
+            <div class="text-xl sm:text-2xl font-black text-white font-mono">BENNETT UNIV</div>
+            <div class="text-[11px] text-zinc-400 font-mono">Greater Noida, Delhi NCR</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FACTION SELECTOR SECTION -->
+    <section id="factions" class="relative py-24 px-4 sm:px-6 max-w-7xl mx-auto">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-950/60 border border-red-500/30 text-[11px] font-mono font-bold text-red-400 uppercase tracking-widest mb-3">
+          HERO FACTION ALLIANCE
+        </div>
+        <h2 class="text-3xl sm:text-5xl font-black uppercase tracking-tight text-white mb-4">
+          CHOOSE YOUR <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-amber-400 to-red-500">AVENGERS PROTOCOL</span>
+        </h2>
+        <p class="text-zinc-400 text-sm sm:text-base leading-relaxed">
+          Align your squad with one of the 5 Stark Multiverse divisions. Switching recalibrates the visual HUD telemetry, audio resonance, and particle physics.
+        </p>
+      </div>
+
+      <!-- Faction Buttons -->
+      <div class="flex flex-wrap items-center justify-center gap-3 mb-10" id="faction-buttons-container"></div>
+
+      <!-- Active Faction Dossier -->
+      <div id="active-faction-dossier" class="glass-panel-elevated rounded-2xl p-6 sm:p-10 border border-red-500 shadow-[0_0_35px_rgba(226,54,54,0.35)] transition-all duration-500">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div class="lg:col-span-4 flex flex-col items-center lg:items-start text-center lg:text-left">
+            <div id="faction-icon-box" class="h-20 w-20 rounded-2xl flex items-center justify-center mb-4 border border-red-500 bg-red-500/15 text-red-500 shadow-xl">
+              <i data-lucide="shield-alert" class="h-10 w-10"></i>
+            </div>
+            <div id="faction-alias" class="text-xs font-mono font-bold tracking-widest uppercase mb-1 text-red-400">Iron Man Protocol</div>
+            <h3 id="faction-name" class="text-2xl sm:text-3xl font-black uppercase text-white mb-2">Stark AI Initiative</h3>
+            <div id="faction-motto" class="italic text-zinc-400 font-serif text-sm mb-4">"Sometimes you gotta run before you can walk."</div>
+            <a href="#register" id="faction-cta" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-xs font-mono font-bold uppercase tracking-wider text-black bg-red-500 hover:scale-105 transition-all shadow-lg">
+              <i data-lucide="sparkles" class="h-4 w-4"></i>
+              <span>CLAIM PASS AS STARK AI</span>
+            </a>
+          </div>
+
+          <div class="lg:col-span-8 flex flex-col gap-6">
+            <div>
+              <div class="text-[11px] font-mono uppercase text-zinc-500 tracking-wider mb-1">DOMAIN OPERATIONAL OBJECTIVE</div>
+              <div id="faction-domain" class="text-lg sm:text-xl font-bold text-white mb-2">Artificial Intelligence & Cloud Arc Systems</div>
+              <p id="faction-desc" class="text-zinc-300 text-sm sm:text-base leading-relaxed">
+                Architect cutting-edge autonomous agents, neural synthesis pipelines, and high-performance cloud backends that operate at J.A.R.V.I.S. efficiency.
+              </p>
+            </div>
+            <div>
+              <div class="text-[11px] font-mono uppercase text-zinc-500 tracking-wider mb-2">CORE TECHNICAL ARSENAL</div>
+              <div id="faction-tech" class="flex flex-wrap gap-2"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 INFINITY STONE TRACKS SECTION -->
+    <section id="tracks" class="relative py-24 px-4 sm:px-6 max-w-7xl mx-auto">
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-[11px] font-mono font-bold text-cyan-400 uppercase tracking-widest mb-3">
+          <i data-lucide="sparkles" class="h-3.5 w-3.5"></i>
+          <span>FLAGSHIP HACKATHON TRACKS</span>
+        </div>
+        <h2 class="text-3xl sm:text-5xl font-black uppercase tracking-tight text-white mb-4">
+          THE 6 <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-teal-200">INFINITY STONE TRACKS</span>
+        </h2>
+        <p class="text-zinc-400 text-sm sm:text-base leading-relaxed">
+          Each track corresponds to a primordial cosmic entity. Choose your quest and claim cash bounties totaling ₹2,50,000+.
+        </p>
+      </div>
+
+      <!-- Tracks Grid -->
+      <div id="tracks-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </section>
+
+    <!-- TVA SACRED TIMELINE ROADMAP -->
+    <section id="timeline" class="relative py-24 px-4 sm:px-6 max-w-7xl mx-auto">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-950/60 border border-amber-500/30 text-[11px] font-mono font-bold text-amber-400 uppercase tracking-widest mb-3">
+          <i data-lucide="clock" class="h-3.5 w-3.5"></i>
+          <span>TVA TEMPORAL LOOM</span>
+        </div>
+        <h2 class="text-3xl sm:text-5xl font-black uppercase tracking-tight text-white mb-4">
+          THE <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-yellow-400 to-orange-400">SACRED TIMELINE</span>
+        </h2>
+        <p class="text-zinc-400 text-sm sm:text-base leading-relaxed">
+          From the initial registration spark to the Living Tribunal judgment at Bennett University. Follow each epoch on the temporal loom.
+        </p>
+      </div>
+
+      <div id="timeline-tabs" class="flex overflow-x-auto pb-4 gap-3 mb-10 justify-start md:justify-center"></div>
+      <div id="timeline-detail-card" class="glass-panel-elevated rounded-2xl p-6 sm:p-10 border border-amber-500/30 shadow-2xl"></div>
+    </section>
+
+    <!-- STARK TREASURY & PRIZES -->
+    <section id="prizes" class="relative py-24 px-4 sm:px-6 max-w-7xl mx-auto">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-950/60 border border-amber-500/30 text-[11px] font-mono font-bold text-amber-400 uppercase tracking-widest mb-3">
+          <i data-lucide="trophy" class="h-3.5 w-3.5"></i>
+          <span>STARK INDUSTRIES TREASURY</span>
+        </div>
+        <h2 class="text-3xl sm:text-5xl font-black uppercase tracking-tight text-white mb-4">
+          ₹2,50,000+ <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-yellow-500">BOUNTIES & PERKS</span>
+        </h2>
+        <p class="text-zinc-400 text-sm sm:text-base leading-relaxed">
+          The Living Tribunal awards extraordinary valor. Claim cash grants, hand-forged Infinity trophies, cloud credits, and direct incubator funding at Bennett University.
+        </p>
+      </div>
+
+      <div id="prizes-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16"></div>
+
+      <!-- Swag Arsenal -->
+      <div data-feature="SWAG ARSENAL" data-feature-color="#e23636" class="glass-panel-elevated rounded-2xl p-6 sm:p-8 border border-white/10 flex flex-col md:flex-row items-center justify-between gap-6 cursor-default">
+        <div class="flex items-center gap-4">
+          <div class="h-14 w-14 rounded-xl bg-red-600/20 border border-red-500/40 flex items-center justify-center text-red-400 shrink-0">
+            <i data-lucide="gift" class="h-7 w-7"></i>
+          </div>
+          <div>
+            <h4 class="text-lg font-bold text-white uppercase">UNIVERSAL PARTICIPATION SWAG ARSENAL</h4>
+            <p class="text-xs sm:text-sm text-zinc-400 max-w-xl">
+              Every assembled hacker receives an official Stark Expo T-Shirt, GeeksforGeeks vouchers, custom holographic S.H.I.E.L.D. stickers, and a verified Certificate of Multiverse Participation.
+            </p>
+          </div>
+        </div>
+        <a href="#register" class="shrink-0 px-6 py-3 rounded-xl bg-gradient-to-r from-red-600 to-amber-600 text-white font-mono font-bold text-xs uppercase tracking-wider hover:scale-105 transition-all shadow-lg">
+          CLAIM YOUR SWAG KIT
+        </a>
+      </div>
+    </section>
+
+    <!-- S.H.I.E.L.D. BADGE GENERATOR -->
+    <section id="register" class="relative py-24 px-4 sm:px-6 max-w-7xl mx-auto">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-950/60 border border-red-500/30 text-[11px] font-mono font-bold text-red-400 uppercase tracking-widest mb-3">
+          <i data-lucide="shield" class="h-3.5 w-3.5"></i>
+          <span>S.H.I.E.L.D. RECRUITMENT TERMINAL</span>
+        </div>
+        <h2 class="text-3xl sm:text-5xl font-black uppercase tracking-tight text-white mb-4">
+          GENERATE YOUR <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-amber-400 to-red-600">CLEARANCE PASS</span>
+        </h2>
+        <p class="text-zinc-400 text-sm sm:text-base leading-relaxed">
+          Fill your operative dossier to forge your official Multiverse Clearance Ticket. Free admission, meals, and overnight hacking access at Bennett University campus.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+        <!-- Form -->
+        <div class="lg:col-span-6 glass-panel-elevated rounded-2xl p-6 sm:p-8 border border-white/10 shadow-2xl">
+          <form id="badge-form" class="space-y-4 font-mono">
+            <div>
+              <label class="block text-xs uppercase text-zinc-300 font-bold mb-1">Operative Full Name</label>
+              <input type="text" id="input-name" required value="Alex Parker" class="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-red-500">
+            </div>
+            <div>
+              <label class="block text-xs uppercase text-zinc-300 font-bold mb-1">University / Institute</label>
+              <input type="text" id="input-univ" required value="Bennett University" class="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-500">
+            </div>
+            <div>
+              <label class="block text-xs uppercase text-zinc-300 font-bold mb-1">Technical Specialization</label>
+              <select id="input-role" class="w-full bg-black/80 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-cyan-500">
+                <option value="AI & Autonomous Multi-Agent Systems">AI & Autonomous Multi-Agent Systems</option>
+                <option value="Full-Stack Web3 & Security">Full-Stack Web3 & Defensive Security</option>
+                <option value="High-Performance Cloud & DevOps">High-Performance Cloud & DevOps</option>
+                <option value="Spatial Computing, AR/VR & UI/UX">Spatial Computing, AR/VR & UI/UX</option>
+                <option value="Vibranium Hardware, IoT & Robotics">Vibranium Hardware, IoT & Robotics</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs uppercase text-zinc-300 font-bold mb-2">Choose Hero Avatar Seal</label>
+              <div id="avatar-selector" class="grid grid-cols-3 sm:grid-cols-6 gap-2"></div>
+            </div>
+            <div>
+              <label class="block text-xs uppercase text-zinc-300 font-bold mb-1">GitHub / Portfolio Handle</label>
+              <input type="text" id="input-github" value="alex-parker-dev" class="w-full bg-black/60 border border-white/15 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500">
+            </div>
+            <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-red-600 via-amber-600 to-red-600 text-white font-black text-sm uppercase tracking-widest shadow-2xl hover:scale-102 transition-all flex items-center justify-center gap-2 cursor-pointer mt-2">
+              <i data-lucide="sparkles" class="h-4 w-4 text-amber-300"></i>
+              <span>CLAIM OFFICIAL CLEARANCE PASS</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Live ID Card Preview -->
+        <div class="lg:col-span-6 flex flex-col items-center w-full">
+          <div class="w-full max-w-md">
+            <div class="text-xs font-mono text-zinc-400 uppercase tracking-widest mb-3 flex items-center justify-between">
+              <span>LIVE HOLOGRAPHIC BADGE PREVIEW</span>
+              <span class="text-emerald-400 flex items-center gap-1 font-mono">
+                <span class="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                SYNCHRONIZED
+              </span>
+            </div>
+
+            <div id="shield-pass-card" data-feature="SHIELD BADGE" data-feature-color="#e23636" class="relative rounded-2xl bg-gradient-to-b from-[#101424] via-[#090d18] to-[#04060d] border-2 border-red-500/50 p-6 sm:p-7 shadow-[0_0_50px_rgba(226,54,54,0.3)] overflow-hidden cursor-default">
+              <div class="flex items-center justify-between border-b border-red-500/30 pb-4 mb-5">
+                <div class="flex items-center gap-2.5">
+                  <div class="h-9 w-9 rounded-lg bg-red-600 flex items-center justify-center font-black text-white text-xs font-mono shadow-md">GFG</div>
+                  <div>
+                    <div class="text-[10px] font-mono tracking-widest text-red-400 font-bold uppercase">S.H.I.E.L.D. CLEARANCE DIVISION</div>
+                    <div class="text-xs font-black text-white uppercase">BENNETT UNIVERSITY SECTOR</div>
+                  </div>
+                </div>
+                <div class="text-right font-mono">
+                  <span class="inline-block px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 text-[10px] font-bold border border-emerald-500/30">LVL 7 // OMEGA</span>
+                  <div id="badge-ticket-id" class="text-[9px] text-zinc-500 mt-0.5">GFG-BU-8492-AVX</div>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-4 mb-6">
+                <div id="badge-avatar-box" class="h-20 w-20 rounded-2xl flex flex-col items-center justify-center font-black text-white text-lg font-mono border-2 border-red-500 bg-red-500/25 shadow-xl shrink-0">
+                  <span id="badge-avatar-initials">IM</span>
+                  <span class="text-[9px] font-mono font-normal opacity-80 mt-0.5">HERO SEAL</span>
+                </div>
+                <div class="min-w-0">
+                  <div class="text-[10px] font-mono text-zinc-400 uppercase tracking-wider">OPERATIVE CALLSIGN</div>
+                  <h3 id="badge-name-display" class="text-xl sm:text-2xl font-black text-white truncate uppercase font-mono">ALEX PARKER</h3>
+                  <div id="badge-univ-display" class="text-xs font-mono text-amber-400 font-bold truncate">Bennett University</div>
+                  <div id="badge-role-display" class="text-[11px] font-mono text-zinc-300 mt-1 truncate">Track: AI Systems</div>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-3 p-3 rounded-xl bg-black/70 border border-white/10 mb-5 text-[11px] font-mono">
+                <div>
+                  <span class="text-zinc-500 block text-[9px] uppercase">COORDINATES</span>
+                  <span class="font-bold text-cyan-400">BENNETT CAMPUS</span>
+                </div>
+                <div>
+                  <span class="text-zinc-500 block text-[9px] uppercase">DATE ALLOCATED</span>
+                  <span class="font-bold text-zinc-300">OCTOBER 16–18, 2026</span>
+                </div>
+                <div class="col-span-2">
+                  <span class="text-zinc-500 block text-[9px] uppercase">OPERATIVE HANDLE</span>
+                  <span id="badge-github-display" class="font-bold text-emerald-400">@alex-parker-dev</span>
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between pt-2 border-t border-white/10 font-mono text-[9px] text-zinc-500">
+                <span>AUTHENTICATED BY GEEKSFORGEEKS BENNETT</span>
+                <div class="h-4 w-24 bg-gradient-to-r from-red-600 via-amber-400 to-cyan-400 rounded-sm opacity-80"></div>
+              </div>
+            </div>
+
+            <!-- Confirmation Message -->
+            <div id="badge-success-alert" class="hidden mt-4 p-4 rounded-xl bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 text-xs font-mono">
+              <div class="flex items-center gap-2 font-bold mb-1">
+                <i data-lucide="check-circle" class="h-4 w-4"></i>
+                <span>REGISTRATION SUCCESSFUL // S.H.I.E.L.D. PASS ISSUED!</span>
+              </div>
+              <p class="text-[11px] text-zinc-300 font-normal">Show this clearance pass at Bennett University check-in bay on Oct 16.</p>
+              <div class="mt-3 flex gap-2">
+                <button onclick="navigator.clipboard.writeText(document.getElementById('badge-ticket-id').innerText); alert('Pass ID Copied!');" class="px-3 py-1 rounded bg-emerald-500/20 text-emerald-300 text-[10px] font-bold">COPY ID</button>
+                <button onclick="window.print();" class="px-3 py-1 rounded bg-white/10 text-white text-[10px] font-bold">PRINT PASS</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AVENGERS COUNCIL SECTION -->
+    <section id="council" class="relative py-24 px-4 sm:px-6 max-w-7xl mx-auto">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-950/60 border border-red-500/30 text-[11px] font-mono font-bold text-red-400 uppercase tracking-widest mb-3">
+          <i data-lucide="shield-check" class="h-3.5 w-3.5"></i>
+          <span>AVENGERS ADVISORY BOARD</span>
+        </div>
+        <h2 class="text-3xl sm:text-5xl font-black uppercase tracking-tight text-white mb-4">
+          THE <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-amber-400">LIVING TRIBUNAL</span> & MENTORS
+        </h2>
+        <p class="text-zinc-400 text-sm sm:text-base leading-relaxed">
+          Learn directly from distinguished researchers, enterprise architects, and Bennett University faculty guiding squads through midnight debugging.
+        </p>
+      </div>
+
+      <div id="council-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+    </section>
+
+    <!-- BENNETT UNIVERSITY CAMPUS & SPONSORS -->
+    <section class="relative py-20 px-4 sm:px-6 max-w-7xl mx-auto">
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-950/60 border border-red-500/30 text-[11px] font-mono font-bold text-red-400 uppercase tracking-widest mb-3">
+          <i data-lucide="shield" class="h-3.5 w-3.5"></i>
+          <span>COLLABORATIVE ALLIANCE</span>
+        </div>
+        <h2 class="text-3xl sm:text-5xl font-black uppercase tracking-tight text-white mb-4">
+          MULTIVERSE ALLIES & <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-amber-400">SPONSORS</span>
+        </h2>
+      </div>
+
+      <div id="sponsors-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-16 font-mono"></div>
+
+      <!-- Campus Spotlight -->
+      <div class="glass-panel-elevated rounded-2xl p-6 sm:p-10 border border-white/10 overflow-hidden relative">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div class="lg:col-span-7">
+            <div class="inline-flex items-center gap-2 text-xs font-mono text-amber-400 font-bold uppercase mb-2">
+              <i data-lucide="building-2" class="h-4 w-4"></i>
+              <span>THE HOST CITADEL // GREATER NOIDA</span>
+            </div>
+            <h3 class="text-2xl sm:text-3xl font-black text-white uppercase mb-3 font-mono">BENNETT UNIVERSITY (THE TIMES GROUP)</h3>
+            <p class="text-zinc-300 text-sm sm:text-base leading-relaxed mb-4">
+              Spread across a 68-acre world-class campus in TechZone 2, Greater Noida, Bennett University houses India's premier AI & High-Performance Supercomputing facilities and 24/7 maker spaces.
+            </p>
+            <div class="flex flex-wrap items-center gap-4 text-xs font-mono text-zinc-400">
+              <span class="flex items-center gap-1.5 text-zinc-200">
+                <i data-lucide="map-pin" class="h-4 w-4 text-red-400"></i>
+                Plot Nos 8, 11, TechZone 2, Greater Noida, UP 201310
+              </span>
+              <span class="text-cyan-400 font-bold">1 Gbps Fiber Wi-Fi</span>
+              <span class="text-amber-400 font-bold">24/7 Hacker Lounge</span>
+            </div>
+          </div>
+          <div class="lg:col-span-5 flex flex-col gap-2 p-5 rounded-xl bg-black/60 border border-white/10 font-mono text-xs">
+            <div class="text-zinc-400 font-bold uppercase border-b border-white/10 pb-2">CAMPUS DIRECTIVES</div>
+            <div class="flex justify-between py-1 border-b border-white/5"><span class="text-zinc-500">Nearest Metro:</span><span class="text-white">Pari Chowk / Alpha 1</span></div>
+            <div class="flex justify-between py-1 border-b border-white/5"><span class="text-zinc-500">Security Gate:</span><span class="text-white">Gate 1 Pass Check</span></div>
+            <div class="flex justify-between py-1"><span class="text-zinc-500">Chapter Body:</span><span class="text-red-400 font-bold">GFG Student Chapter</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- JARVIS FAQ SECTION -->
+    <section id="faq" class="relative py-24 px-4 sm:px-6 max-w-5xl mx-auto">
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-[11px] font-mono font-bold text-cyan-400 uppercase tracking-widest mb-3">
+          <i data-lucide="terminal" class="h-3.5 w-3.5"></i>
+          <span>STARK J.A.R.V.I.S. KNOWLEDGE CORE</span>
+        </div>
+        <h2 class="text-3xl sm:text-5xl font-black uppercase tracking-tight text-white mb-4">
+          FREQUENTLY ASKED <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-teal-200">PROTOCOLS</span>
+        </h2>
+      </div>
+
+      <div id="faq-container" class="space-y-4"></div>
+    </section>
+
+  </main>
+
+  <!-- MARVEL FOOTER -->
+  <footer class="relative bg-[#020408] border-t border-white/10 pt-16 pb-12 px-4 sm:px-6">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-10 mb-12">
+      <div class="md:col-span-6 flex flex-col">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="h-10 w-10 rounded-lg bg-red-600 flex items-center justify-center font-mono font-black text-sm text-white shadow-lg">GFG</div>
+          <div>
+            <h3 class="text-base font-black uppercase text-white tracking-wider">AVENGERS: INITIATIVE '26</h3>
+            <p class="text-[11px] font-mono text-red-400 font-bold">GEEKSFORGEEKS STUDENT CHAPTER • BENNETT UNIVERSITY</p>
+          </div>
+        </div>
+        <p class="text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-md">
+          The premier annual hackathon and technical symposium at Bennett University, Greater Noida. Bringing together 500+ builders to create the future.
+        </p>
+      </div>
+
+      <div class="md:col-span-3 font-mono text-xs text-zinc-400 space-y-1">
+        <h4 class="font-bold text-white uppercase mb-2">VENUE CITADEL</h4>
+        <div>Bennett University (Times Group)</div>
+        <div>TechZone 2, Greater Noida, UP</div>
+        <div class="text-amber-400 pt-1">28.4595° N, 77.5140° E</div>
+      </div>
+
+      <div class="md:col-span-3 flex flex-col justify-between items-start md:items-end">
+        <div class="p-3 rounded-xl bg-black/60 border border-white/10 text-right w-full md:w-auto font-mono">
+          <div class="text-[10px] text-zinc-500 uppercase">TELEMETRY CLOCK</div>
+          <div id="footer-ist-clock" class="text-xs font-bold text-emerald-400">SYNCING IST...</div>
+          <div class="text-[9px] text-zinc-500">BENNETT CAMPUS NODE</div>
+        </div>
+        <button onclick="window.scrollTo({top: 0, behavior: 'smooth'}); soundFX.playRepulsorBlast();" class="mt-4 flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-xs font-mono text-zinc-300 border border-white/10 transition-all cursor-pointer">
+          <span>RETURN TO TOP</span>
+          <i data-lucide="arrow-up" class="h-3.5 w-3.5 text-red-400"></i>
+        </button>
+      </div>
+    </div>
+    <div class="max-w-7xl mx-auto pt-6 border-t border-white/10 text-[11px] font-mono text-zinc-500 flex justify-between flex-wrap gap-2">
+      <div>© 2026 GeeksforGeeks Student Chapter, Bennett University. Designed for Junior Core Recruitment.</div>
+      <div>Inspired by Marvel Entertainment & Stark Industries.</div>
+    </div>
+  </footer>
+
+  <!-- THANOS GAUNTLET SNAP TRIGGER (EASTER EGG) -->
+  <div class="fixed bottom-6 right-6 z-40 group">
+    <div id="snap-tooltip" class="absolute -top-10 right-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity bg-black/90 border border-amber-500/40 text-[11px] font-mono text-amber-300 px-2.5 py-1 rounded shadow-xl whitespace-nowrap">
+      Thanos Snap // Disintegrate 50%
+    </div>
+    <button id="gauntlet-btn" data-feature="THANOS SNAP" data-feature-color="#fbbf24" class="relative flex items-center justify-center h-14 w-14 rounded-full border-2 border-amber-400 bg-gradient-to-br from-amber-600 via-amber-800 to-black shadow-2xl hover:scale-110 active:scale-95 transition-all cursor-pointer">
+      <i data-lucide="sparkles" class="h-6 w-6 text-amber-300"></i>
+    </button>
+  </div>
+
+  <!-- Time Stone Reverse Banner -->
+  <div id="snap-banner" class="fixed top-16 left-0 right-0 z-50 hidden items-center justify-between bg-gradient-to-r from-purple-950/95 via-red-950/95 to-black/95 px-6 py-3 border-y border-amber-500/40 shadow-2xl backdrop-blur-xl">
+    <div class="flex items-center gap-3">
+      <i data-lucide="alert-triangle" class="h-5 w-5 text-amber-400 animate-pulse"></i>
+      <div class="text-xs sm:text-sm font-mono text-zinc-200">
+        <span class="font-bold text-amber-400">THE BLIP OCCURRED:</span> Elements were reduced to cosmic dust across the multiverse.
+      </div>
+    </div>
+    <button id="reverse-snap-btn" class="flex items-center gap-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-bold px-4 py-1.5 text-xs sm:text-sm tracking-wide shadow-lg cursor-pointer">
+      <i data-lucide="rotate-ccw" class="h-4 w-4"></i>
+      <span>ACTIVATE TIME STONE REVERSE</span>
+    </button>
+  </div>
+
+  <!-- Track Detail Modal -->
+  <div id="track-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-black/80 backdrop-blur-xl">
+    <div id="track-modal-card" class="relative w-full max-w-2xl bg-[#0a0e1a] rounded-2xl border p-6 sm:p-8 shadow-2xl max-h-[90vh] overflow-y-auto">
+      <div class="flex justify-between items-start mb-4">
+        <div>
+          <span id="modal-stone-tag" class="text-xs font-mono font-bold uppercase px-2.5 py-1 rounded inline-block mb-2"></span>
+          <h3 id="modal-title" class="text-xl sm:text-2xl font-black text-white"></h3>
+          <div id="modal-bounty" class="text-xs font-mono text-amber-400 mt-1 font-bold"></div>
+        </div>
+        <button onclick="closeModal()" class="text-zinc-400 hover:text-white p-2 rounded-lg bg-white/5 font-mono text-xs">✕ CLOSE</button>
+      </div>
+      <p id="modal-desc" class="text-zinc-300 text-sm leading-relaxed mb-6"></p>
+      <div class="mb-6">
+        <h4 class="text-xs font-mono uppercase text-zinc-400 font-bold tracking-wider mb-3">MISSION PROBLEM STATEMENTS</h4>
+        <div id="modal-problems" class="space-y-3"></div>
+      </div>
+      <div class="mb-6">
+        <h4 class="text-xs font-mono uppercase text-zinc-400 font-bold tracking-wider mb-2">RECOMMENDED TECH ARSENAL</h4>
+        <div id="modal-tech" class="flex flex-wrap gap-2"></div>
+      </div>
+      <div class="pt-4 border-t border-white/10 flex justify-end">
+        <a href="#register" onclick="closeModal(); soundFX.playArcCharge();" class="px-6 py-2.5 rounded-lg text-xs font-mono font-bold uppercase tracking-wider text-black bg-cyan-400 shadow-lg">REGISTER FOR THIS TRACK</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Multiverse Core Scripts: 5-File Architecture -->
+  <script src="data.js"></script>
+  <script src="audio.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

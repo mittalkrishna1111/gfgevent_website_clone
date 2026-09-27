@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AVENGERS: INITIATIVE '26 // Multiverse of Code — GFG SC Bennett University</title>
+  <meta name="description" content="Earth's Mightiest Geeks Assemble! Official Marvel-Themed Hackathon & Tech Summit by GeeksforGeeks Student Chapter, Bennett University. ₹2,50,000+ Prize Pool, 36-Hour Hackathon, Stark Expo & Multiverse Quests.">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+  <!-- Pure Vanilla CSS Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Interactive Multiverse Background Canvas -->
+  <canvas id="multiverse-canvas"></canvas>
+
+  <!-- Client-Side Confetti Overlay Canvas -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Stark HUD Reticle Cursor -->
+  <div id="custom-cursor">
+    <div id="cursor-content">
+      <span id="cursor-feature-text"></span>
+      <span id="cursor-sub-text">TARGET ACQUIRED</span>
+    </div>
+  </div>
+  <div id="cursor-tag">
+    <span class="cursor-pulse-dot"></span>
+    <span>FEATURE:</span>
+    <span id="cursor-tag-name"></span>
+  </div>
+
+  <!-- Top Chapter Announcement Bar -->
+  <div class="top-announcement">
+    <span class="pulse-circle"></span>
+    <span>GEEKSFORGEEKS STUDENT CHAPTER // BENNETT UNIVERSITY PRESENTS</span>
+    <span class="announcement-separator">|</span>
+    <span class="announcement-highlight">OCTOBER 16–18, 2026 • GREATER NOIDA</span>
+  </div>
+
+  <!-- Global Floating Glass Navbar -->
+  <header class="navbar-wrapper">
+    <nav class="navbar" aria-label="Main Navigation">
+      <!-- Chapter Logo & Branding -->
+      <a href="#" class="nav-brand">
+        <div class="brand-badge">GFG</div>
+        <div class="brand-text">
+          <span class="brand-title">MULTIVERSE OF CODE '26</span>
+          <span class="brand-sub">BENNETT UNIVERSITY CHAPTER</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <ul class="nav-links">
+        <li><a href="#factions" class="nav-link">FACTIONS</a></li>
+        <li><a href="#tracks" class="nav-link">INFINITY TRACKS</a></li>
+        <li><a href="#timeline" class="nav-link">TIMELINE</a></li>
+        <li><a href="#prizes" class="nav-link">PRIZES</a></li>
+        <li><a href="#council" class="nav-link">COUNCIL</a></li>
+        <li><a href="#faq" class="nav-link">JARVIS FAQ</a></li>
+      </ul>
+
+      <!-- Nav Actions & Audio Controls -->
+      <div class="nav-actions">
+        <button id="cosmic-hum-btn" class="btn-ctrl" type="button" title="Toggle Cosmic Hum">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="2"/>
+            <path d="M16.24 7.76a6 6 0 0 1 0 8.49m-8.48-.01a6 6 0 0 1 0-8.49m11.31-2.82a10 10 0 0 1 0 14.14m-14.14 0a10 10 0 0 1 0-14.14"/>
+          </svg>
+          <span id="hum-text">COSMIC HUM</span>
+        </button>
+
+        <button id="mute-btn" class="btn-ctrl" type="button" title="Toggle Sound FX">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
+          </svg>
+        </button>
+
+        <a href="#register" data-feature="ASSEMBLE SQUAD" data-feature-color="#e23636" class="btn-assemble">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#fbbf24" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+          </svg>
+          <span>ASSEMBLE</span>
+        </a>
+
+        <!-- Mobile Hamburger Toggle Button -->
+        <button id="hamburger-btn" class="hamburger-btn" type="button" aria-label="Toggle Navigation Menu">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Mobile Navigation Overlay Drawer -->
+  <div id="mobile-nav" class="mobile-nav">
+    <a href="#factions" class="mobile-nav-link">HERO FACTIONS</a>
+    <a href="#tracks" class="mobile-nav-link">INFINITY TRACKS</a>
+    <a href="#timeline" class="mobile-nav-link">SACRED TIMELINE</a>
+    <a href="#prizes" class="mobile-nav-link">STARK TREASURY</a>
+    <a href="#register" class="mobile-nav-link">CLEARANCE PASS</a>
+    <a href="#council" class="mobile-nav-link">LIVING TRIBUNAL</a>
+    <a href="#faq" class="mobile-nav-link">JARVIS FAQ</a>
+  </div>
+
+  <!-- Main Content -->
+  <main>
+
+    <!-- CINEMATIC HERO SECTION -->
+    <section class="hero-section bg-hex-grid">
+      <div class="hero-content">
+        <!-- Telemetry Pill -->
+        <div class="telemetry-pill">
+          <span class="pulse-circle"></span>
+          <span class="telemetry-red">STARK EXPO '26</span>
+          <span class="announcement-separator">/</span>
+          <span>BENNETT UNIVERSITY CHAPTER</span>
+          <span class="announcement-separator">/</span>
+          <span class="telemetry-gold">28.4595° N, 77.5140° E</span>
+        </div>
+
+        <!-- Subtitle & Headline -->
+        <div class="hero-subtitle">AVENGERS: INITIATIVE PROTOCOL</div>
+        <h1 class="hero-title">
+          <span class="hero-title-top">MULTIVERSE</span>
+          <span class="hero-title-gradient">OF CODE 2026</span>
+        </h1>
+
+        <p class="hero-desc">
+          Earth's Mightiest Geeks assemble at <strong>Bennett University</strong> to defend the digital realm. 36 hours of non-stop coding, neural multi-agent systems, cyber warfare defense, and multiversal innovation.
+        </p>
+
+        <!-- Live Countdown Timer -->
+        <div data-feature="COUNTDOWN" data-feature-color="#fbbf24" class="countdown-card">
+          <div class="countdown-header">
+            <span class="countdown-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+              <span>T-MINUS COUNTDOWN TO INITIATIVE ASSEMBLE</span>
+            </span>
+            <span>OCTOBER 16, 2026 • 09:00 IST</span>
+          </div>
+
+          <div class="countdown-grid">
+            <div class="countdown-item">
+              <span id="cd-days" class="countdown-val">18</span>
+              <span class="countdown-lbl">DAYS</span>
+            </div>
+            <div class="countdown-item">
+              <span id="cd-hours" class="countdown-val">22</span>
+              <span class="countdown-lbl">HOURS</span>
+            </div>
+            <div class="countdown-item">
+              <span id="cd-minutes" class="countdown-val">14</span>
+              <span class="countdown-lbl">MINUTES</span>
+            </div>
+            <div class="countdown-item">
+              <span id="cd-seconds" class="countdown-val">49</span>
+              <span class="countdown-lbl">SECONDS</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Action CTAs -->
+        <div class="hero-cta-group">
+          <a href="#register" data-feature="ASSEMBLE SQUAD" data-feature-color="#e23636" class="btn-hero-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fde68a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+            </svg>
+            <span>ASSEMBLE SQUAD // GET BADGE</span>
+          </a>
+          <a href="#tracks" data-feature="INFINITY TRACKS" data-feature-color="#00f0ff" class="btn-hero-secondary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
+            </svg>
+            <span>EXPLORE 6 INFINITY TRACKS</span>
+          </a>
+        </div>
+
+        <!-- 4 Live Metrics Cards -->
+        <div class="metrics-grid">
+          <div data-feature="BOUNTY VAULT" data-feature-color="#fbbf24" class="metric-card">
+            <div class="metric-header" style="color:var(--arc-gold)">
+              <span>BOUNTY VAULT</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+                <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+                <path d="M4 22h16"/>
+                <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/>
+                <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/>
+                <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
+              </svg>
+            </div>
+            <div class="metric-val">₹2,50,000+</div>
+            <div class="metric-sub">Cash + Cloud Grants</div>
+          </div>
+
+          <div data-feature="36H SPRINT" data-feature-color="#00f0ff" class="metric-card">
+            <div class="metric-header" style="color:var(--tesseract-cyan)">
+              <span>HACK DURATION</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+            <div class="metric-val">36 HOURS</div>
+            <div class="metric-sub">Non-Stop In-Person Sprint</div>
+          </div>
+
+          <div data-feature="500+ HACKERS" data-feature-color="#a855f7" class="metric-card">
+            <div class="metric-header" style="color:var(--power-purple)">
+              <span>CAPACITY</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </div>
+            <div class="metric-val">500+ HACKERS</div>
+            <div class="metric-sub">100+ Shortlisted Squads</div>
+          </div>
+
+          <div data-feature="BENNETT UNIV" data-feature-color="#ef4444" class="metric-card">
+            <div class="metric-header" style="color:var(--marvel-red)">
+              <span>LOCATION</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+            </div>
+            <div class="metric-val">BENNETT UNIV</div>
+            <div class="metric-sub">Greater Noida, Delhi NCR</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HERO FACTION SELECTOR SECTION -->
+    <section id="factions" class="section">
+      <div class="section-head">
+        <div class="section-badge" style="background:rgba(185,28,28,0.25); color:var(--marvel-red); border:1px solid rgba(226,54,54,0.35);">
+          HERO FACTION ALLIANCE
+        </div>
+        <h2 class="section-title">
+          CHOOSE YOUR <span class="hero-title-gradient">AVENGERS PROTOCOL</span>
+        </h2>
+        <p class="section-desc">
+          Align your squad with one of the 5 Stark Multiverse divisions. Switching recalibrates the visual HUD telemetry, audio resonance, and particle physics.
+        </p>
+      </div>
+
+      <!-- Faction Protocol Buttons -->
+      <div id="faction-buttons-container" class="faction-buttons-grid"></div>
+
+      <!-- Active Faction Dossier Card -->
+      <div id="active-faction-dossier" class="glass-panel-elevated faction-dossier-card">
+        <div class="faction-grid-layout">
+          <div class="faction-hero-col">
+            <div id="faction-icon-box" class="faction-icon-box">
+              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
+              </svg>
+            </div>
+            <div id="faction-alias" class="faction-alias-tag">Iron Man Protocol</div>
+            <h3 id="faction-name" class="faction-name-title">Stark AI Initiative</h3>
+            <div id="faction-motto" class="faction-motto-quote">"Sometimes you gotta run before you can walk."</div>
+            <a href="#register" id="faction-cta" class="btn-faction-cta">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+              </svg>
+              <span>CLAIM PASS AS STARK AI</span>
+            </a>
+          </div>
+
+          <div class="faction-info-col">
+            <div>
+              <div class="dossier-label">DOMAIN OPERATIONAL OBJECTIVE</div>
+              <div id="faction-domain" class="faction-domain-heading">Artificial Intelligence & Cloud Arc Systems</div>
+              <p id="faction-desc" class="faction-desc-text">
+                Architect cutting-edge autonomous agents, neural synthesis pipelines, and high-performance cloud backends that operate at J.A.R.V.I.S. efficiency.
+              </p>
+            </div>
+            <div>
+              <div class="dossier-label">CORE TECHNICAL ARSENAL</div>
+              <div id="faction-tech" class="faction-tech-tags"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 INFINITY STONE TRACKS SECTION -->
+    <section id="tracks" class="section">
+      <div class="section-head">
+        <div class="section-badge" style="background:rgba(8,145,178,0.25); color:var(--tesseract-cyan); border:1px solid rgba(0,240,255,0.35);">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+          </svg>
+          <span>FLAGSHIP HACKATHON TRACKS</span>
+        </div>
+        <h2 class="section-title">
+          THE 6 <span class="hero-title-gradient">INFINITY STONE TRACKS</span>
+        </h2>
+        <p class="section-desc">
+          Each track corresponds to a primordial cosmic entity. Choose your quest and claim cash bounties totaling ₹2,50,000+.
+        </p>
+      </div>
+
+      <!-- Tracks Grid -->
+      <div id="tracks-grid" class="tracks-grid"></div>
+    </section>
+
+    <!-- TVA SACRED TIMELINE SECTION -->
+    <section id="timeline" class="section">
+      <div class="section-head">
+        <div class="section-badge" style="background:rgba(180,83,9,0.25); color:var(--arc-gold); border:1px solid rgba(251,191,36,0.35);">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <span>TVA TEMPORAL LOOM</span>
+        </div>
+        <h2 class="section-title">
+          THE <span class="hero-title-gradient">SACRED TIMELINE</span>
+        </h2>
+        <p class="section-desc">
+          From the initial registration spark to the Living Tribunal judgment at Bennett University. Follow each epoch on the temporal loom.
+        </p>
+      </div>
+
+      <div id="timeline-tabs" class="timeline-tabs-row"></div>
+      <div id="timeline-detail-card" class="glass-panel-elevated timeline-detail-card"></div>
+    </section>
+
+    <!-- STARK TREASURY & PRIZES SECTION -->
+    <section id="prizes" class="section">
+      <div class="section-head">
+        <div class="section-badge" style="background:rgba(180,83,9,0.25); color:var(--arc-gold); border:1px solid rgba(251,191,36,0.35);">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+            <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+            <path d="M4 22h16"/>
+            <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/>
+            <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/>
+            <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
+          </svg>
+          <span>STARK INDUSTRIES TREASURY</span>
+        </div>
+        <h2 class="section-title">
+          ₹2,50,000+ <span class="hero-title-gradient">BOUNTIES & PERKS</span>
+        </h2>
+        <p class="section-desc">
+          The Living Tribunal awards extraordinary valor. Claim cash grants, hand-forged Infinity trophies, cloud credits, and direct incubator funding at Bennett University.
+        </p>
+      </div>
+
+      <div id="prizes-grid" class="prizes-grid"></div>
+
+      <!-- Universal Participation Swag Kit -->
+      <div data-feature="SWAG ARSENAL" data-feature-color="#e23636" class="glass-panel-elevated swag-kit-banner">
+        <div class="swag-info-block">
+          <div class="swag-icon-box">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="8" width="18" height="4" rx="1"/>
+              <path d="M12 8v13"/>
+              <path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/>
+              <path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"/>
+            </svg>
+          </div>
+          <div>
+            <h4 class="swag-title">UNIVERSAL PARTICIPATION SWAG ARSENAL</h4>
+            <p class="swag-desc">
+              Every assembled hacker receives an official Stark Expo T-Shirt, GeeksforGeeks vouchers, custom holographic S.H.I.E.L.D. stickers, and a verified Certificate of Multiverse Participation.
+            </p>
+          </div>
+        </div>
+        <a href="#register" class="btn-assemble">CLAIM YOUR SWAG KIT</a>
+      </div>
+    </section>
+
+    <!-- S.H.I.E.L.D. BADGE GENERATOR SECTION -->
+    <section id="register" class="section">
+      <div class="section-head">
+        <div class="section-badge" style="background:rgba(185,28,28,0.25); color:var(--marvel-red); border:1px solid rgba(226,54,54,0.35);">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
+          </svg>
+          <span>S.H.I.E.L.D. RECRUITMENT TERMINAL</span>
+        </div>
+        <h2 class="section-title">
+          GENERATE YOUR <span class="hero-title-gradient">CLEARANCE PASS</span>
+        </h2>
+        <p class="section-desc">
+          Fill your operative dossier to forge your official Multiverse Clearance Ticket. Free admission, meals, and overnight hacking access at Bennett University campus.
+        </p>
+      </div>
+
+      <div class="badge-generator-grid">
+        <!-- Badge Form -->
+        <div class="glass-panel-elevated badge-form-panel">
+          <form id="badge-form" class="badge-form">
+            <div class="form-group">
+              <label for="input-name" class="form-lbl">Operative Full Name</label>
+              <input type="text" id="input-name" class="form-ctrl" required value="Alex Parker">
+            </div>
+
+            <div class="form-group">
+              <label for="input-univ" class="form-lbl">University / Institute</label>
+              <input type="text" id="input-univ" class="form-ctrl" required value="Bennett University">
+            </div>
+
+            <div class="form-group">
+              <label for="input-role" class="form-lbl">Technical Specialization</label>
+              <select id="input-role" class="form-ctrl">
+                <option value="AI & Autonomous Multi-Agent Systems">AI & Autonomous Multi-Agent Systems</option>
+                <option value="Full-Stack Web3 & Defensive Security">Full-Stack Web3 & Defensive Security</option>
+                <option value="High-Performance Cloud & DevOps">High-Performance Cloud & DevOps</option>
+                <option value="Spatial Computing, AR/VR & UI/UX">Spatial Computing, AR/VR & UI/UX</option>
+                <option value="Vibranium Hardware, IoT & Robotics">Vibranium Hardware, IoT & Robotics</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-lbl">Choose Hero Avatar Seal</label>
+              <div id="avatar-selector" class="avatar-selector-grid"></div>
+            </div>
+
+            <div class="form-group">
+              <label for="input-github" class="form-lbl">GitHub / Portfolio Handle</label>
+              <input type="text" id="input-github" class="form-ctrl" value="alex-parker-dev">
+            </div>
+
+            <button type="submit" class="btn-form-submit">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fde68a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+              </svg>
+              <span>CLAIM OFFICIAL CLEARANCE PASS</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Live Holographic ID Pass Preview -->
+        <div class="badge-preview-col">
+          <div class="preview-wrapper">
+            <div class="preview-status-row">
+              <span>LIVE HOLOGRAPHIC BADGE PREVIEW</span>
+              <span class="sync-status">
+                <span class="pulse-circle"></span>
+                <span>SYNCHRONIZED</span>
+              </span>
+            </div>
+
+            <div id="shield-pass-card" data-feature="SHIELD BADGE" data-feature-color="#e23636" class="shield-pass-card">
+              <div class="pass-card-header">
+                <div class="pass-brand-lockup">
+                  <div class="pass-badge-icon">GFG</div>
+                  <div class="pass-brand-text">
+                    <div class="pass-div-title">S.H.I.E.L.D. CLEARANCE DIVISION</div>
+                    <div class="pass-campus-sub">BENNETT UNIVERSITY SECTOR</div>
+                  </div>
+                </div>
+                <div class="pass-level-box">
+                  <span class="pass-level-tag">LVL 7 // OMEGA</span>
+                  <div id="badge-ticket-id" class="pass-ticket-id">GFG-BU-8492-AVX</div>
+                </div>
+              </div>
+
+              <div class="pass-profile-row">
+                <div id="badge-avatar-box" class="pass-avatar-box">
+                  <span id="badge-avatar-initials" class="pass-avatar-initials">IM</span>
+                  <span class="pass-avatar-seal-txt">HERO SEAL</span>
+                </div>
+                <div class="pass-profile-info">
+                  <div class="pass-callsign-lbl">OPERATIVE CALLSIGN</div>
+                  <h3 id="badge-name-display" class="pass-name-display">ALEX PARKER</h3>
+                  <div id="badge-univ-display" class="pass-univ-display">Bennett University</div>
+                  <div id="badge-role-display" class="pass-role-display">Track: AI Systems</div>
+                </div>
+              </div>
+
+              <div class="pass-meta-grid">
+                <div>
+                  <span class="meta-field-lbl">COORDINATES</span>
+                  <span class="meta-field-val meta-cyan">BENNETT CAMPUS</span>
+                </div>
+                <div>
+                  <span class="meta-field-lbl">DATE ALLOCATED</span>
+                  <span class="meta-field-val">OCTOBER 16–18, 2026</span>
+                </div>
+                <div>
+                  <span class="meta-field-lbl">OPERATIVE HANDLE</span>
+                  <span id="badge-github-display" class="meta-field-val meta-emerald">@alex-parker-dev</span>
+                </div>
+              </div>
+
+              <div class="pass-card-footer">
+                <span>AUTHENTICATED BY GEEKSFORGEEKS BENNETT</span>
+                <div class="pass-auth-bar"></div>
+              </div>
+            </div>
+
+            <!-- Confirmation Alert Banner -->
+            <div id="badge-success-alert" class="badge-success-alert">
+              <div class="alert-title-row">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                  <polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+                <span>REGISTRATION SUCCESSFUL // S.H.I.E.L.D. PASS ISSUED!</span>
+              </div>
+              <p class="alert-sub-txt">Present this pass at Bennett University check-in desk on October 16.</p>
+              <div class="alert-actions-row">
+                <button id="btn-copy-id" class="btn-alert-action" type="button">COPY ID</button>
+                <button id="btn-print-pass" class="btn-alert-action" type="button">PRINT PASS</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AVENGERS COUNCIL SECTION -->
+    <section id="council" class="section">
+      <div class="section-head">
+        <div class="section-badge" style="background:rgba(185,28,28,0.25); color:var(--marvel-red); border:1px solid rgba(226,54,54,0.35);">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
+          </svg>
+          <span>AVENGERS ADVISORY BOARD</span>
+        </div>
+        <h2 class="section-title">
+          THE <span class="hero-title-gradient">LIVING TRIBUNAL</span> & MENTORS
+        </h2>
+        <p class="section-desc">
+          Learn directly from distinguished researchers, enterprise architects, and Bennett University faculty guiding squads through midnight debugging.
+        </p>
+      </div>
+
+      <div id="council-grid" class="council-grid"></div>
+    </section>
+
+    <!-- BENNETT UNIVERSITY CAMPUS & SPONSORS SECTION -->
+    <section class="section">
+      <div class="section-head">
+        <div class="section-badge" style="background:rgba(185,28,28,0.25); color:var(--marvel-red); border:1px solid rgba(226,54,54,0.35);">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
+          </svg>
+          <span>COLLABORATIVE ALLIANCE</span>
+        </div>
+        <h2 class="section-title">
+          MULTIVERSE ALLIES & <span class="hero-title-gradient">SPONSORS</span>
+        </h2>
+      </div>
+
+      <!-- Sponsors Grid -->
+      <div id="sponsors-grid" class="sponsors-grid"></div>
+
+      <!-- Campus Spotlight Card -->
+      <div class="glass-panel-elevated campus-spotlight-card">
+        <div class="campus-grid-layout">
+          <div>
+            <div class="campus-lead-txt">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/>
+                <path d="M9 22v-4h6v4"/>
+                <path d="M8 6h.01M16 6h.01M12 6h.01M12 10h.01M12 14h.01M16 10h.01M16 14h.01M8 10h.01M8 14h.01"/>
+              </svg>
+              <span>THE HOST CITADEL // GREATER NOIDA</span>
+            </div>
+            <h3 class="campus-title">BENNETT UNIVERSITY (THE TIMES GROUP)</h3>
+            <p class="campus-desc">
+              Spread across a 68-acre world-class campus in TechZone 2, Greater Noida, Bennett University houses India's premier AI & High-Performance Supercomputing facilities and 24/7 maker spaces.
+            </p>
+            <div class="campus-perks-row">
+              <span style="display:flex; align-items:center; gap:6px; color:#ffffff;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+                <span>Plot Nos 8, 11, TechZone 2, Greater Noida, UP 201310</span>
+              </span>
+              <span style="color:var(--tesseract-cyan); font-weight:800;">1 Gbps Fiber Wi-Fi</span>
+              <span style="color:var(--arc-gold); font-weight:800;">24/7 Hacker Lounge</span>
+            </div>
+          </div>
+
+          <div class="campus-directives-box">
+            <div class="directive-header">CAMPUS DIRECTIVES</div>
+            <div class="directive-row">
+              <span style="color:var(--text-dim)">Nearest Metro:</span>
+              <span style="color:#ffffff;">Pari Chowk / Alpha 1 (Aqua Line)</span>
+            </div>
+            <div class="directive-row">
+              <span style="color:var(--text-dim)">Security Gate:</span>
+              <span style="color:#ffffff;">Gate 1 Pass Check</span>
+            </div>
+            <div class="directive-row" style="border-bottom:none;">
+              <span style="color:var(--text-dim)">Chapter Body:</span>
+              <span style="color:var(--marvel-red); font-weight:800;">GFG Student Chapter</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- JARVIS FAQ SECTION -->
+    <section id="faq" class="section">
+      <div class="section-head">
+        <div class="section-badge" style="background:rgba(8,145,178,0.25); color:var(--tesseract-cyan); border:1px solid rgba(0,240,255,0.35);">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="4 17 10 11 4 5"/>
+            <line x1="12" y1="19" x2="20" y2="19"/>
+          </svg>
+          <span>STARK J.A.R.V.I.S. KNOWLEDGE CORE</span>
+        </div>
+        <h2 class="section-title">
+          FREQUENTLY ASKED <span class="hero-title-gradient">PROTOCOLS</span>
+        </h2>
+      </div>
+
+      <div id="faq-container" class="faq-container"></div>
+    </section>
+
+  </main>
+
+  <!-- CINEMATIC MARVEL FOOTER -->
+  <footer class="footer-section">
+    <div class="footer-content">
+      <div class="footer-grid">
+        <div class="footer-brand-col">
+          <div class="footer-brand-row">
+            <div class="brand-badge">GFG</div>
+            <div>
+              <h3 style="font-size:15px; font-weight:900; text-transform:uppercase; color:#ffffff;">AVENGERS: INITIATIVE '26</h3>
+              <p style="font-size:11px; font-family:var(--font-mono); color:var(--marvel-red); font-weight:800;">GEEKSFORGEEKS STUDENT CHAPTER • BENNETT UNIVERSITY</p>
+            </div>
+          </div>
+          <p class="footer-desc-txt">
+            The flagship annual hackathon and technical symposium at Bennett University, Greater Noida. Bringing together 500+ builders to build the future of software, intelligence, and defense.
+          </p>
+        </div>
+
+        <div class="footer-venue-col">
+          <h4 class="footer-col-title">VENUE CITADEL</h4>
+          <div>Bennett University (Times Group)</div>
+          <div>TechZone 2, Greater Noida, UP</div>
+          <div style="color:var(--arc-gold); padding-top:4px;">28.4595° N, 77.5140° E</div>
+        </div>
+
+        <div class="footer-telemetry-col">
+          <div class="telemetry-clock-box">
+            <div class="clock-lbl">TELEMETRY CLOCK</div>
+            <div id="footer-ist-clock" class="clock-val">SYNCING IST...</div>
+            <div class="clock-node">BENNETT CAMPUS NODE</div>
+          </div>
+          <button id="btn-back-to-top" class="btn-top-return" type="button">
+            <span>RETURN TO TOP</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="19" x2="12" y2="5"/>
+              <polyline points="5 12 12 5 19 12"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="footer-bottom-bar">
+        <div>© 2026 GeeksforGeeks Student Chapter, Bennett University. Designed for Junior Core Recruitment.</div>
+        <div>Inspired by Marvel Entertainment & Stark Industries.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- THANOS INFINITY GAUNTLET SNAP TRIGGER (EASTER EGG) -->
+  <div class="gauntlet-trigger">
+    <div id="snap-tooltip" class="snap-tooltip">
+      Thanos Snap // Disintegrate 50%
+    </div>
+    <button id="gauntlet-btn" data-feature="THANOS SNAP" data-feature-color="#fbbf24" class="gauntlet-btn" type="button" aria-label="Thanos Gauntlet Snap">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fde68a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Time Stone Reverse Banner -->
+  <div id="snap-banner" class="snap-banner">
+    <div class="snap-banner-text">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
+        <line x1="12" y1="9" x2="12" y2="13"/>
+        <line x1="12" y1="17" x2="12.01" y2="17"/>
+      </svg>
+      <div>
+        <strong style="color:var(--arc-gold);">THE BLIP OCCURRED:</strong> 50% of multiversal assets were disintegrated.
+      </div>
+    </div>
+    <button id="reverse-snap-btn" class="btn-reverse-snap" type="button">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="1 4 1 10 7 10"/>
+        <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>
+      </svg>
+      <span>ACTIVATE TIME STONE REVERSE</span>
+    </button>
+  </div>
+
+  <!-- Track Detail Mission Modal -->
+  <div id="track-modal" class="modal-backdrop" role="dialog" aria-modal="true">
+    <div id="track-modal-card" class="modal-card">
+      <div class="modal-header">
+        <div>
+          <span id="modal-stone-tag" class="modal-stone-tag"></span>
+          <h3 id="modal-title" class="modal-title"></h3>
+          <div id="modal-bounty" class="modal-bounty"></div>
+        </div>
+        <button id="modal-close-btn" class="btn-modal-close" type="button">✕ CLOSE</button>
+      </div>
+
+      <p id="modal-desc" class="modal-desc"></p>
+
+      <div>
+        <h4 class="modal-section-title">MISSION PROBLEM STATEMENTS</h4>
+        <div id="modal-problems" class="modal-problems-list"></div>
+      </div>
+
+      <div>
+        <h4 class="modal-section-title">RECOMMENDED TECH ARSENAL</h4>
+        <div id="modal-tech" class="modal-tech-row"></div>
+      </div>
+
+      <div class="modal-footer">
+        <a href="#register" id="modal-register-btn" class="btn-modal-register">REGISTER FOR THIS TRACK</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pure Vanilla JavaScript Controller -->
+  <script src="js/script.js" defer></script>
+</body>
+</html>
